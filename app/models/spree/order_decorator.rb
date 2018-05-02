@@ -1,12 +1,13 @@
 module Spree
   Order.class_eval do
     scope :abandoned,
-      -> { limit_time = Time.current - SpreeAbandonedCarts::Config.abandoned_after_minutes.minutes
+      -> {  start_at = Time.current - SpreeAbandonedCarts::Config.abandoned_after_minutes.minutes
+            end_at = Day.today - 3
 
-           incomplete.
-           where('email IS NOT NULL').
-           where("#{quoted_table_name}.item_total > 0").
-           where("#{quoted_table_name}.updated_at < ?", limit_time) }
+            incomplete.
+            where('email IS NOT NULL').
+            where("#{quoted_table_name}.item_total > 0").
+            where("#{quoted_table_name}.updated_at < ? AND #{quoted_table_name}.updated_at > ?", start_at, end_at) }
 
     scope :abandon_not_notified,
       -> { abandoned.where(abandoned_cart_email_sent_at: nil) }
