@@ -2,7 +2,7 @@ module Spree
   Order.class_eval do
     scope :abandoned,
       -> {  start_at = Time.current - SpreeAbandonedCarts::Config.abandoned_after_minutes.minutes
-            end_at = Time.current - 3.days
+            end_at = Time.current - SpreeAbandonedCarts::Config.days_before_too_old.days
 
             incomplete.
             where('email IS NOT NULL').

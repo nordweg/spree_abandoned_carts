@@ -37,6 +37,8 @@ SpreeAbandonedCarts::Config.tap do |config|
   config.abandoned_after_minutes = 1440 # 24 hours
   # how often the sidekiq worker should run
   config.worker_frequency_minutes = 30
+  # Orders older then this shouldn't be notified
+  config.days_before_too_old = 5
 end
 ```
 
